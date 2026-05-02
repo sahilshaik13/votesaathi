@@ -1,0 +1,6 @@
+fastapi[all]
+uvicorn
+google-cloud-firestore
+google-genai
+pydantic
+python-dotenv
