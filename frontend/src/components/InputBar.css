@@ -1,0 +1,60 @@
+.input-bar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+.input-bar input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.95rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-bar input:focus {
+  border-color: var(--accent);
+}
+
+.input-bar input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.input-bar button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.1s, background-color 0.2s;
+}
+
+.input-bar button:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+.input-bar button:disabled {
+  background: var(--border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.input-bar button svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 2px; /* optical center adjustment */
+  margin-top: 2px;
+}

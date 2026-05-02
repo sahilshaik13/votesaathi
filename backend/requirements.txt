@@ -1,5 +1,5 @@
 fastapi[all]
-uvicorn
+uvicorn[standard]
 google-cloud-firestore
 google-genai
 pydantic

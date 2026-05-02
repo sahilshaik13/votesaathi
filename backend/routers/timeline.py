@@ -1,12 +1,10 @@
 from fastapi import APIRouter
+from agent.tools.get_timeline import get_election_timeline
 
 router = APIRouter(prefix="/api", tags=["Timeline"])
 
+
 @router.get("/timeline")
 def get_timeline(type: str = "general"):
-    # Placeholder timeline data
-    phases = [
-        {"name": "Announcement", "description": "Election dates announced by ECI", "duration": "Day 0"},
-        {"name": "Nomination", "description": "Candidates file papers", "duration": "Day 7-14"}
-    ]
+    phases = get_election_timeline(type)
     return {"phases": phases}
