@@ -2,9 +2,8 @@
 Secret Manager service — fetches secrets from GCP Secret Manager.
 """
 
+import os
 from google.cloud import secretmanager
-from config import GCP_PROJECT_ID
-
 
 def get_secret(secret_id: str, version_id: str = "latest") -> str:
     """

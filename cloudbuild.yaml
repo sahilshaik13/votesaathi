@@ -19,5 +19,9 @@ steps:
       - '--region'
       - 'asia-south1'
       - '--allow-unauthenticated'
+      - '--port'
+      - '8080'
+      - '--timeout'
+      - '600'
 images:
   - 'gcr.io/$PROJECT_ID/votesaathi-backend'

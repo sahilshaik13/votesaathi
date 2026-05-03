@@ -7,26 +7,33 @@ logger = logging.getLogger(__name__)
 
 import os
 # Initialize Firebase Admin once
+# Initialize Firebase Admin once with extreme safety
 try:
     if not firebase_admin._apps:
-        # Prioritize specific Firebase credentials, fallback to main GOOGLE_APPLICATION_CREDENTIALS
-        cred_path = FIREBASE_APPLICATION_CREDENTIALS or os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+        # Check potential credential paths
+        paths_to_check = [
+            FIREBASE_APPLICATION_CREDENTIALS,
+            os.getenv("GOOGLE_APPLICATION_CREDENTIALS"),
+            "service-account.json",
+            "votesaathi-bcf9e-firebase-adminsdk-fbsvc-c3e2b36673.json"
+        ]
         
-        if cred_path and os.path.exists(cred_path):
+        cred_path = None
+        for p in paths_to_check:
+            if p and os.path.exists(p):
+                cred_path = p
+                break
+        
+        if cred_path:
             logger.info(f"Initializing Firebase with credentials from {cred_path}")
             cred = credentials.Certificate(cred_path)
-            app = firebase_admin.initialize_app(cred, {
-                'databaseURL': FIREBASE_DATABASE_URL
-            })
-            logger.info(f"Firebase Initialized for project: {app.project_id}")
-            logger.info(f"Using Database URL: {FIREBASE_DATABASE_URL}")
+            firebase_admin.initialize_app(cred, {'databaseURL': FIREBASE_DATABASE_URL})
         else:
-            logger.info("Initializing Firebase with default credentials")
-            firebase_admin.initialize_app(options={
-                'databaseURL': FIREBASE_DATABASE_URL
-            })
+            logger.info("Initializing Firebase with default Application Default Credentials")
+            firebase_admin.initialize_app(options={'databaseURL': FIREBASE_DATABASE_URL})
+            
 except Exception as e:
-    logger.error(f"Failed to initialize Firebase Admin: {e}")
+    logger.error(f"Non-blocking Firebase initialization error: {e}")
 
 def update_realtime_news(news_list, query=None):
     """
