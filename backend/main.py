@@ -38,38 +38,10 @@ allowed_origins = [
 env_origins = os.getenv("ALLOWED_ORIGINS", "").split(",")
 allowed_origins.extend([o for o in env_origins if o])
 
-from fastapi import Request
-from fastapi.responses import JSONResponse
-import traceback
-
-@app.middleware("http")
-async def emergency_cors_and_error_handler(request: Request, call_next):
-    if request.method == "OPTIONS":
-        return await call_next(request)
-        
-    try:
-        response = await call_next(request)
-        response.headers["Access-Control-Allow-Origin"] = "*"
-        response.headers["Access-Control-Allow-Methods"] = "*"
-        response.headers["Access-Control-Allow-Headers"] = "*"
-        return response
-    except Exception as e:
-        import logging
-        logging.error(f"Unhandled exception in request: {traceback.format_exc()}")
-        return JSONResponse(
-            status_code=500,
-            content={"detail": "Internal Server Error", "error": str(e)},
-            headers={
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "*",
-                "Access-Control-Allow-Headers": "*"
-            }
-        )
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
+    allow_origins=allowed_origins,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )

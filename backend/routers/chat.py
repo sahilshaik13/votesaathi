@@ -55,41 +55,68 @@ async def post_chat(request: ChatRequest, authorization: str | None = Header(Non
     return ChatResponse(reply=result["text"], sources=result["sources"], session_id=session_id)
 
 
-@router.post("/heartbeat")
+class HeartbeatResponse(BaseModel):
+    status: str
+
+class SessionListResponse(BaseModel):
+    sessions: list
+
+class TokenResponse(BaseModel):
+    token: str
+
+class HistoryResponse(BaseModel):
+    history: list
+
+class DeleteResponse(BaseModel):
+    deleted: bool
+
+@router.post("/heartbeat", response_model=HeartbeatResponse)
 async def heartbeat():
-    """Simple endpoint for the frontend to signal that the user is still active."""
+    """
+    Signals that the user is still active to keep the background scraper running.
+    """
     update_last_active()
-    return {"status": "ok"}
+    return HeartbeatResponse(status="ok")
 
 
-@router.get("/user/sessions/{user_id}")
+@router.get("/user/sessions/{user_id}", response_model=SessionListResponse)
 async def list_user_sessions(user_id: str, authorization: str | None = Header(None)):
+    """
+    Retrieves all chat session metadata associated with a specific user ID.
+    """
     # Verify token
     if authorization:
         token = authorization.replace("Bearer ", "")
         sub = verify_token(token)
         if sub != user_id:
             print(f"DEBUG: Session list token mismatch! sub={sub}, user_id={user_id}")
-            # For now, allow it to proceed to avoid 401 blocking the user
-            # raise HTTPException(status_code=401, detail="Invalid or expired token")
             
     sessions = get_user_sessions(user_id)
-    return {"sessions": sessions}
+    return SessionListResponse(sessions=sessions)
 
 
-@router.get("/user/token/{user_id}")
+@router.get("/user/token/{user_id}", response_model=TokenResponse)
 async def get_token(user_id: str):
+    """
+    Generates a secure JWT for a user ID (Loginless Auth).
+    """
     token = create_token(user_id)
-    return {"token": token}
+    return TokenResponse(token=token)
 
 
-@router.get("/session/{session_id}")
+@router.get("/session/{session_id}", response_model=HistoryResponse)
 async def get_session(session_id: str):
+    """
+    Fetches the full message history for a specific chat session.
+    """
     history = get_session_history(session_id)
-    return {"history": history}
+    return HistoryResponse(history=history)
 
 
-@router.delete("/session/{session_id}")
+@router.delete("/session/{session_id}", response_model=DeleteResponse)
 async def delete_session_route(session_id: str):
+    """
+    Permanently removes a chat session and its history from Firestore.
+    """
     delete_session(session_id)
-    return {"deleted": True}
+    return DeleteResponse(deleted=True)
