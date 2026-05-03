@@ -33,6 +33,27 @@ def test_chat_unauthorized():
 
 def test_dashboard_stats():
     """Test that the dashboard stats endpoint returns data."""
-    response = client.get("/api/dashboard/stats")
+    response = client.get("/api/dashboard/live")
     assert response.status_code == 200
-    assert "voter_turnout" in response.json()
+    assert "news" in response.json()
+    assert "stats" in response.json()
+
+def test_search_constituency():
+    """Test searching for a specific constituency."""
+    response = client.get("/api/dashboard/search?query=Lucknow")
+    assert response.status_code == 200
+    assert response.json()["found"] is True
+    assert response.json()["data"]["name"] == "Lucknow"
+
+def test_list_states():
+    """Test that the states list returns valid data."""
+    response = client.get("/api/dashboard/states")
+    assert response.status_code == 200
+    assert len(response.json()) > 30
+    assert response.json()[0]["name"] == "Andhra Pradesh"
+
+def test_timeline_state():
+    """Test fetching a state-specific timeline."""
+    response = client.get("/api/timeline?type=state")
+    assert response.status_code == 200
+    assert "phases" in response.json()

@@ -27,53 +27,57 @@ app = FastAPI(
 )
 
 # CORS config
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
+# Include both the production frontend and localhost for development
+allowed_origins = [
+    "https://votesaathi-frontend-171624099766.asia-south1.run.app",
+    "https://votesaathi-495109.web.app", # Firebase hosting fallback
+    "http://localhost:5173",
+    "http://localhost:3000"
+]
+# Add any origins from environment variables
+env_origins = os.getenv("ALLOWED_ORIGINS", "").split(",")
+allowed_origins.extend([o for o in env_origins if o])
+
+from fastapi import Request
+from fastapi.responses import JSONResponse
+import traceback
+
+@app.middleware("http")
+async def emergency_cors_and_error_handler(request: Request, call_next):
+    if request.method == "OPTIONS":
+        return await call_next(request)
+        
+    try:
+        response = await call_next(request)
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "*"
+        response.headers["Access-Control-Allow-Headers"] = "*"
+        return response
+    except Exception as e:
+        import logging
+        logging.error(f"Unhandled exception in request: {traceback.format_exc()}")
+        return JSONResponse(
+            status_code=500,
+            content={"detail": "Internal Server Error", "error": str(e)},
+            headers={
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "*",
+                "Access-Control-Allow-Headers": "*"
+            }
+        )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 import threading
-import time
-import logging
-
-# We import these inside the task to avoid circular imports or early failures
-def scraper_background_task():
-    """Background task to run the scraper periodically if users are active."""
-    logger = logging.getLogger("ScraperThread")
-    logger.info("Background scraper thread initializing...")
-    
-    # Give the main app time to settle
-    time.sleep(10)
-    
-    while True:
-        try:
-            from live_scraper_process import run_scraper_cycle, get_last_active
-            last_active = get_last_active() or 0
-            time_since_active = time.time() - last_active
-            
-            if time_since_active < 600: # 10 minutes
-                logger.info("Active users detected. Running scraper cycle...")
-                run_scraper_cycle()
-                time.sleep(120)
-            else:
-                time.sleep(60)
-        except Exception as e:
-            logging.error(f"Error in background scraper thread: {e}")
-            time.sleep(60)
-
-@app.on_event("startup")
-async def startup_event():
-    try:
-        thread = threading.Thread(target=scraper_background_task, daemon=True)
-        thread.start()
-        logging.info("Scraper background thread launched successfully.")
-    except Exception as e:
-        logging.error(f"Failed to launch scraper thread: {e}")
+@app.get("/")
+async def root():
+    return {"message": "VoteSaathi API is Live", "version": "1.0.0"}
 
 # Register routers
 app.include_router(health.router)

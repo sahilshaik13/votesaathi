@@ -10,6 +10,13 @@
   flex-direction: column;
   gap: 0.75rem;
   scroll-behavior: smooth;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.chat-window::-webkit-scrollbar {
+  display: none;
 }
 
 /* ---- Typing indicator ---- */

@@ -6,14 +6,9 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-from functools import lru_cache
-from typing import List, Dict, Optional
-
-@lru_cache(maxsize=32)
-def scrape_live_election_news(lang: str = "en", query: Optional[str] = None) -> List[Dict[str, str]]:
+def scrape_live_election_news(lang: str = "en", query: str = None):
     """
     Scrapes live election news localized by language and filtered by query.
-    Uses LRU cache to minimize network overhead.
     """
     try:
         # Mapping frontend lang codes to Google News params
@@ -49,7 +44,7 @@ def scrape_live_election_news(lang: str = "en", query: Optional[str] = None) -> 
         logger.error(f"Error scraping news for {lang}: {e}")
         return []
 
-def get_live_stats(query: Optional[str] = None) -> Dict[str, str]:
+def get_live_stats(query: str = None):
     """
     Retrieves election statistics, optionally filtered by state/constituency.
     """
@@ -74,7 +69,7 @@ def get_live_stats(query: Optional[str] = None) -> Dict[str, str]:
         "total_seats": "543"
     }
 
-def get_states_data() -> List[Dict[str, any]]:
+def get_states_data():
     """
     Returns a list of all Indian States and Union Territories with basic stats.
     """
@@ -117,7 +112,7 @@ def get_states_data() -> List[Dict[str, any]]:
         {"name": "Ladakh", "total_seats": 1, "voter_turnout": "71.1%"}
     ]
 
-def search_constituency_data(query: str) -> Dict[str, any]:
+def search_constituency_data(query: str):
     """
     Searches for data related to a specific electoral constituency or state.
 
@@ -125,7 +120,7 @@ def search_constituency_data(query: str) -> Dict[str, any]:
         query (str): The name or partial name of the constituency or state.
 
     Returns:
-        Dict[str, any]: A result dictionary with 'found' flag and 'data' or 'message'.
+        dict: A result dictionary with 'found' flag and 'data' or 'message'.
     """
     # Simple Mock Data for demonstration
     mock_db = {

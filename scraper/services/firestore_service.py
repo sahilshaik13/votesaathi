@@ -6,11 +6,11 @@ running locally (via `gcloud auth application-default login`) or on Cloud Run.
 """
 
 from google.cloud import firestore
-from config import FIREBASE_PROJECT_ID, FIRESTORE_COLLECTION
+from config import GCP_PROJECT_ID, FIRESTORE_COLLECTION
 
 
 def _client() -> firestore.Client:
-    return firestore.Client(project=FIREBASE_PROJECT_ID)
+    return firestore.Client(project=GCP_PROJECT_ID)
 
 
 def get_session_history(session_id: str) -> list[dict]:

@@ -24,11 +24,23 @@ steps:
       - '8080'
       - '--timeout'
       - '600'
+      - '--set-env-vars'
+      - 'RAG_CORPUS_ID=3458764513820540928,GEMINI_MODEL=gemini-2.5-flash,FIREBASE_PROJECT_ID=votesaathi-bcf9e,FIREBASE_DATABASE_URL=https://votesaathi-bcf9e-default-rtdb.firebaseio.com'
 
   # --- FRONTEND ---
   # Build the frontend container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/votesaathi-frontend', './frontend']
+    args: [
+      'build', 
+      '-t', 'gcr.io/$PROJECT_ID/votesaathi-frontend', 
+      '--build-arg', 'VITE_API_URL=https://votesaathi-backend-171624099766.asia-south1.run.app',
+      '--build-arg', 'VITE_SCRAPER_URL=https://votesaathi-scraper-171624099766.asia-south1.run.app',
+      '--build-arg', 'VITE_FIREBASE_API_KEY=AIzaSyDEsZxpMXKwTcXXQQAVfzp_fabhrY-1NmA',
+      '--build-arg', 'VITE_FIREBASE_SENDER_ID=397292177993',
+      '--build-arg', 'VITE_FIREBASE_APP_ID=1:397292177993:web:bf9a0e8b243e17ba7a8d98',
+      '--build-arg', 'VITE_FIREBASE_PROJECT_ID=votesaathi-bcf9e',
+      './frontend'
+    ]
   
   # Push the frontend container image
   - name: 'gcr.io/cloud-builders/docker'
@@ -49,6 +61,37 @@ steps:
       - '--port'
       - '8080'
 
+  # --- SCRAPER ---
+  # Build the scraper container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/votesaathi-scraper', './scraper']
+  
+  # Push the scraper container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/votesaathi-scraper']
+  
+  # Deploy scraper to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'votesaathi-scraper'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/votesaathi-scraper'
+      - '--region'
+      - 'asia-south1'
+      - '--allow-unauthenticated'
+      - '--port'
+      - '8080'
+      - '--cpu'
+      - '1'
+      - '--memory'
+      - '512Mi'
+      - '--set-env-vars'
+      - 'FIREBASE_PROJECT_ID=votesaathi-bcf9e,FIREBASE_DATABASE_URL=https://votesaathi-bcf9e-default-rtdb.firebaseio.com'
+
 images:
   - 'gcr.io/$PROJECT_ID/votesaathi-backend'
   - 'gcr.io/$PROJECT_ID/votesaathi-frontend'
+  - 'gcr.io/$PROJECT_ID/votesaathi-scraper'

@@ -71,3 +71,11 @@ async def get_state_briefing(state: str):
         "briefing": result["text"],
         "sources": result["sources"]
     }
+@router.post("/trigger-scrape")
+async def trigger_scrape():
+    """
+    Manually triggers a scraper cycle to update Firestore data.
+    """
+    from live_scraper_process import run_scraper_cycle
+    run_scraper_cycle()
+    return {"status": "Scraper cycle triggered successfully"}

@@ -14,7 +14,7 @@ export default function ChatWindow({ messages, isLoading }) {
 
   return (
     <div className="chat-window" role="log" aria-live="polite" aria-label="Conversation">
-      {messages.map(msg => (
+      {messages?.map(msg => (
         <MessageBubble key={msg.id} message={msg} />
       ))}
       {isLoading && (

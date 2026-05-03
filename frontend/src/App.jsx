@@ -37,7 +37,7 @@ export default function App() {
   const handleSelectSession = (id, history) => {
     switchSession(id)
     // History from backend lacks IDs, which breaks React keys
-    const historyWithIds = history.map((msg, index) => ({
+    const historyWithIds = (history || []).map((msg, index) => ({
       ...msg,
       id: msg.id || `${Date.now()}-${index}`
     }))

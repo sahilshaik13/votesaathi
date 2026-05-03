@@ -12,9 +12,10 @@ def test_agent_initialization():
     # but we verify the function signature and setup.
     assert callable(run_agent)
 
-def test_system_instruction_lang():
-    """Verify that language injection logic works."""
-    from agent.election_agent import SYSTEM_INSTRUCTION
-    lang = "Telugu"
-    instructions = SYSTEM_INSTRUCTION + f"\n- CRITICAL: You MUST respond in {lang}."
-    assert "Telugu" in instructions
+def test_agent_tool_registry():
+    """Verify that all mandatory tools are registered in the agent."""
+    from agent.election_agent import TOOL_REGISTRY
+    mandatory_tools = ["get_election_timeline", "explain_step", "check_voter_eligibility", "get_faq", "search_rag"]
+    for tool in mandatory_tools:
+        assert tool in TOOL_REGISTRY
+        assert callable(TOOL_REGISTRY[tool])

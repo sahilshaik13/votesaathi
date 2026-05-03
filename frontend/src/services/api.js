@@ -1,7 +1,24 @@
 import axios from 'axios'
 
-const api = axios.create({
-  baseURL: '/api',
+let API_URL = import.meta.env.VITE_API_URL || '';
+
+// Ensure production URL doesn't have a trailing slash before appending /api
+if (API_URL.endsWith('/')) {
+  API_URL = API_URL.slice(0, -1);
+}
+
+export const api = axios.create({
+  baseURL: API_URL ? `${API_URL}/api` : '/api',
+  headers: { 'Content-Type': 'application/json' },
+})
+
+let SCRAPER_URL = import.meta.env.VITE_SCRAPER_URL || API_URL;
+if (SCRAPER_URL.endsWith('/')) {
+  SCRAPER_URL = SCRAPER_URL.slice(0, -1);
+}
+
+export const scraperApi = axios.create({
+  baseURL: SCRAPER_URL ? `${SCRAPER_URL}/api` : '/api',
   headers: { 'Content-Type': 'application/json' },
 })
 

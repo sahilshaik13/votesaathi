@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import { scraperApi } from '../services/api'
 import ReactMarkdown from 'react-markdown'
 import { subscribeToElectionData } from '../firebase'
 import './LiveDashboard.css'
@@ -24,11 +24,11 @@ export default function LiveDashboard({ onClose }) {
     setActiveQuery(query)
     try {
       // 1. Fetch constituency/state basic result
-      const resSearch = await axios.get(`/api/dashboard/search?query=${query}`)
+      const resSearch = await scraperApi.get(`/dashboard/search?query=${query}`)
       setSearchResult(resSearch.data)
       
       // 2. Fetch specific news and metrics for this query
-      const resLive = await axios.get(`/api/dashboard/live?lang=${lang}&query=${query}`)
+      const resLive = await scraperApi.get(`/dashboard/live?lang=${lang}&query=${query}`)
       setData(resLive.data)
       
       // 3. If it's a state search, fetch deep briefing
@@ -45,7 +45,7 @@ export default function LiveDashboard({ onClose }) {
   const fetchStateBriefing = async (stateName) => {
     setFetchingBrief(true)
     try {
-      const { data } = await axios.get(`/api/dashboard/state-briefing?state=${stateName}`)
+      const { data } = await scraperApi.get(`/dashboard/state-briefing?state=${stateName}`)
       setStateBriefing(data)
     } catch (err) {
       console.error('Failed to fetch state briefing', err)
@@ -63,7 +63,7 @@ export default function LiveDashboard({ onClose }) {
     // 1. Initial Fetch
     const fetchData = async () => {
       try {
-        const resLive = await axios.get(`/api/dashboard/live?lang=${lang}`)
+        const resLive = await scraperApi.get(`/dashboard/live?lang=${lang}`)
         setData(resLive.data)
       } catch (err) {
         console.error('Failed to fetch dashboard data', err)
@@ -127,7 +127,7 @@ export default function LiveDashboard({ onClose }) {
                         const { latitude, longitude } = pos.coords;
                         setSearching(true);
                         try {
-                          const { data } = await axios.get(`/api/dashboard/search?lat=${latitude}&lng=${longitude}`);
+                          const { data } = await scraperApi.get(`/dashboard/search?lat=${latitude}&lng=${longitude}`);
                           setSearchResult(data);
                         } catch (err) {
                           console.error('Location search failed', err);
@@ -190,7 +190,7 @@ export default function LiveDashboard({ onClose }) {
                   <footer className="briefing-sources">
                     <strong>Sources:</strong>
                     <ul>
-                      {stateBriefing.sources.map((src, idx) => (
+                      {stateBriefing?.sources?.map((src, idx) => (
                         <li key={idx}><a href={src.source_uri} target="_blank" rel="noreferrer">{src.source_uri}</a></li>
                       ))}
                     </ul>
@@ -223,7 +223,7 @@ export default function LiveDashboard({ onClose }) {
             <div className="news-panel">
               <h3 className="section-title">🗞️ {t('latest_updates')}</h3>
               <div className="news-scroll">
-                {data?.news.map((item, i) => (
+                {data?.news?.map((item, i) => (
                   <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" className="news-item">
                     <span className="news-title">{item.title}</span>
                     <div className="news-meta">

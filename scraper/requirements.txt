@@ -1,0 +1,11 @@
+fastapi[all]
+uvicorn[standard]
+google-genai
+google-cloud-aiplatform
+google-cloud-firestore
+firebase-admin
+beautifulsoup4
+lxml
+requests
+pydantic
+python-dotenv

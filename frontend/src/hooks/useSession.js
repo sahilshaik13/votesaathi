@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { api } from '../services/api'
 
 /**
  * Manages a persistent session ID and a long-lived user ID using localStorage.
@@ -33,7 +33,7 @@ export function useSession() {
         if (storedToken) {
           setToken(storedToken)
         } else {
-          const { data } = await axios.get(`/api/user/token/${id}`)
+          const { data } = await api.get(`/user/token/${id}`)
           localStorage.setItem('vs_token', data.token)
           setToken(data.token)
         }

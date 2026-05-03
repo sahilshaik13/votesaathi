@@ -48,6 +48,7 @@ credentials.json
 *-firebase-adminsdk-*.json
 service-account.json
 client_secrets.json
+cred.json
 secrets/
 
 # IDEs and Editors

@@ -11,8 +11,12 @@ export default function SessionSidebar({ userId, currentSessionId, onSelect, onC
     const fetchSessions = async () => {
       try {
         const data = await getUserSessions(userId)
-        // Sort by last updated (newest first)
-        setSessions(data.sort((a, b) => new Date(b.last_updated) - new Date(a.last_updated)))
+        if (data && Array.isArray(data)) {
+          // Sort by last updated (newest first)
+          setSessions(data.sort((a, b) => new Date(b.last_updated) - new Date(a.last_updated)))
+        } else {
+          setSessions([])
+        }
       } catch (err) {
         console.error('Failed to fetch sessions', err)
       } finally {

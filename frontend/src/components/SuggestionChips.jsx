@@ -32,7 +32,7 @@ export default function SuggestionChips({ onSelect }) {
           <button 
             key={i} 
             className="chip-btn"
-            onClick={() => onSelect(item.text)}
+            onClick={() => onSelect(t(item.key))}
           >
             <span className="chip-icon">{item.icon}</span>
             <span className="chip-text">{t(item.key)}</span>
