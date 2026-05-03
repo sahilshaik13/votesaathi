@@ -1,30 +1,41 @@
 import React from 'react'
 import './SuggestionChips.css'
+import { useLanguage } from '../context/LanguageContext'
+
+const SUGGESTIONS = [
+  { icon: '📝', text: 'How do I register to vote?' },
+  { icon: '🛡️', text: 'What is the Model Code of Conduct?' },
+  { icon: '📄', text: 'What documents do I need at the booth?' },
+  { icon: '📍', text: 'How do I find my polling booth?' },
+  { icon: '📅', text: 'When is the next election phase?' },
+  { icon: '🌍', text: 'Can NRIs vote in Indian elections?' },
+  { icon: '🗳️', text: 'How does the EVM machine work?' },
+  { icon: '✅', text: 'Am I eligible to vote? I am 17.' },
+]
 
 export default function SuggestionChips({ onSelect }) {
-  const suggestions = [
-    "How do I register to vote?",
-    "What is the Model Code of Conduct?",
-    "What documents do I need at the booth?",
-    "How do I find my polling booth?",
-    "When is the next election phase?",
-    "Can NRIs vote?"
-  ]
-
+  const { t } = useLanguage()
   return (
     <div className="suggestion-container">
       <div className="welcome-banner">
-        <h2>Welcome to VoteSaathi 🗳️</h2>
-        <p>Your AI companion for the Indian Election Process.</p>
+        <img 
+          src="/logo.png" 
+          alt="VoteSaathi Logo" 
+          className="welcome-logo" 
+        />
+        <h2>{t('welcome_title')}</h2>
+        <p>{t('welcome_subtitle')}</p>
       </div>
-      <div className="chips-grid">
-        {suggestions.map((text, i) => (
+
+      <div className="chips-grid" role="list">
+        {SUGGESTIONS.map((item, i) => (
           <button 
             key={i} 
-            className="chip-btn" 
-            onClick={() => onSelect(text)}
+            className="chip-btn"
+            onClick={() => onSelect(item.text)}
           >
-            {text}
+            <span className="chip-icon">{item.icon}</span>
+            <span className="chip-text">{item.text}</span>
           </button>
         ))}
       </div>

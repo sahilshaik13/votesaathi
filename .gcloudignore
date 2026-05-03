@@ -1,0 +1,35 @@
+# If you would like to upload your .git directory, .gitignore file or files
+# from your .gitignore file, remove the corresponding line
+# below:
+.git
+.gitignore
+
+# Environments & Node
+node_modules/
+npm-debug.log
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+
+# Secrets (CRITICAL)
+# Do not upload local credentials to Google Cloud Build.
+# Cloud Run services should use Secret Manager or service accounts.
+.env
+.env.*
+!*.env.example
+credentials.json
+*-firebase-adminsdk-*.json
+*.pem
+*.key
+
+# Local Data
+rag-corpus/
+scratch/
+logs/
+.gitnexus/

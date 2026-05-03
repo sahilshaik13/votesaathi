@@ -4,12 +4,12 @@ import { postChat } from '../services/api'
 /**
  * Manages chat state and communication with the VoteSaathi backend.
  */
-export function useChat(sessionId) {
+export function useChat(sessionId, userId) {
   const [messages, setMessages] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const sendMessage = useCallback(async (text) => {
+  const sendMessage = useCallback(async (text, lang = 'English') => {
     if (!text.trim() || !sessionId) return
 
     const userMsg = { role: 'user', content: text, id: Date.now() }
@@ -18,7 +18,7 @@ export function useChat(sessionId) {
     setError(null)
 
     try {
-      const data = await postChat(text, sessionId)
+      const data = await postChat(text, sessionId, userId, lang)
       const assistantMsg = {
         role: 'assistant',
         content: data.reply,
@@ -31,9 +31,9 @@ export function useChat(sessionId) {
     } finally {
       setIsLoading(false)
     }
-  }, [sessionId])
+  }, [sessionId, userId])
 
   const clearMessages = () => setMessages([])
 
-  return { messages, sendMessage, isLoading, error, clearMessages }
+  return { messages, setMessages, sendMessage, isLoading, error, clearMessages }
 }

@@ -1,60 +1,84 @@
 .input-bar {
   display: flex;
-  gap: 0.5rem;
-  padding: 1rem;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--glass-border);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.03);
+  align-items: center;
+}
+
+.voice-btn {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--skeu-shadow-outer);
+  font-size: 1.2rem;
+}
+
+.voice-btn:hover {
+  transform: scale(1.1);
+  background: var(--green-light);
+  border-color: var(--green-primary);
 }
 
 .input-bar input {
   flex: 1;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 0.85rem 1.25rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  padding: 0.85rem 1.5rem;
   font-size: 0.95rem;
-  color: var(--text);
+  font-family: inherit;
+  color: var(--text-primary);
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.3s;
+  box-shadow: var(--skeu-shadow-inner);
 }
 
 .input-bar input:focus {
-  border-color: var(--accent);
+  background: white;
+  border-color: var(--green-primary);
+  box-shadow: 0 0 0 4px var(--green-glow);
 }
 
-.input-bar input:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.input-bar button {
+.send-btn {
   width: 48px;
   height: 48px;
+  min-width: 48px;
   border-radius: 50%;
   border: none;
-  background: var(--accent);
+  background: var(--green-primary);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.1s, background-color 0.2s;
+  transition: all 0.3s;
+  box-shadow: 0 8px 16px var(--green-glow);
 }
 
-.input-bar button:hover:not(:disabled) {
-  background: var(--accent-hover);
-  transform: scale(1.05);
+.send-btn:hover:not(:disabled) {
+  transform: scale(1.1);
+  background: var(--green-dark);
 }
 
-.input-bar button:disabled {
-  background: var(--border);
+.send-btn:disabled {
+  background: var(--bg-tertiary);
   color: var(--text-muted);
   cursor: not-allowed;
+  box-shadow: none;
 }
 
-.input-bar button svg {
+.send-btn svg {
   width: 20px;
   height: 20px;
-  margin-right: 2px; /* optical center adjustment */
-  margin-top: 2px;
 }

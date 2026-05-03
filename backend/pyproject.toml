@@ -1,0 +1,26 @@
+[project]
+name = "votesaathi-backend"
+version = "1.0.0"
+description = "AI Election Intelligence Engine for India"
+authors = [{ name = "VoteSaathi Team" }]
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "google-cloud-firestore",
+    "google-cloud-secret-manager",
+    "google-cloud-logging",
+    "google-cloud-aiplatform",
+    "google-genai",
+    "pydantic",
+    "pydantic-settings",
+    "python-dotenv",
+    "pyjwt",
+    "feedparser",
+    "beautifulsoup4",
+    "requests",
+    "firebase-admin"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"

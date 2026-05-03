@@ -1,9 +1,13 @@
+/* ============================================================
+   MessageBubble — Chat message with green light theme
+   ============================================================ */
+
 .message-bubble {
   display: flex;
   gap: 0.75rem;
   align-items: flex-start;
   max-width: 85%;
-  animation: fadeSlideIn 0.25s ease-out;
+  animation: fadeSlideUp 0.3s ease-out;
 }
 
 .message-bubble.user {
@@ -15,61 +19,107 @@
   align-self: flex-start;
 }
 
-@keyframes fadeSlideIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* ---- Avatar ---- */
 .avatar {
-  font-size: 1.4rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
   flex-shrink: 0;
-  margin-top: 2px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--skeu-shadow-outer);
 }
 
+/* ---- Bubble content ---- */
 .bubble-content {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  min-width: 0;
 }
 
 .bubble-text {
   margin: 0;
-  padding: 0.75rem 1.1rem;
-  border-radius: 18px;
+  padding: 1rem 1.25rem;
   font-size: 0.95rem;
   line-height: 1.6;
-  white-space: pre-wrap;
   word-break: break-word;
 }
 
+/* User bubble — Green */
 .message-bubble.user .bubble-text {
-  background: var(--accent);
-  color: #fff;
-  border-radius: 18px 18px 4px 18px;
+  background: var(--green-primary);
+  color: white;
+  border-radius: var(--radius-md) var(--radius-md) 4px var(--radius-md);
+  box-shadow: 0 10px 20px var(--green-glow);
 }
 
+/* Assistant bubble — White Glass/Skeu */
 .message-bubble.assistant .bubble-text {
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 18px 18px 18px 4px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md) var(--radius-md) var(--radius-md) 4px;
+  box-shadow: var(--skeu-shadow-outer);
 }
 
+/* ---- Markdown Styling ---- */
+.message-bubble.assistant .bubble-text h3 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: var(--green-dark);
+  font-size: 1.25rem;
+  margin-bottom: 0.6rem;
+}
+
+.message-bubble.assistant .bubble-text a {
+  color: var(--green-primary);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.message-bubble.assistant .bubble-text strong {
+  color: var(--green-dark);
+}
+
+.message-bubble.assistant .bubble-text blockquote {
+  border-left: 4px solid var(--green-primary);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* ---- Sources toggle ---- */
 .sources-toggle {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 0.3rem 0.7rem;
-  font-size: 0.78rem;
-  color: var(--text-muted);
+  gap: 0.4rem;
+  background: var(--green-light);
+  border: 1px solid var(--green-primary);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  color: var(--green-dark);
   cursor: pointer;
   width: fit-content;
-  transition: background 0.15s, color 0.15s;
+  transition: all 0.2s;
+  font-weight: 600;
 }
+
 .sources-toggle:hover {
-  background: var(--border);
-  color: var(--text);
+  background: var(--green-primary);
+  color: white;
+}
+
+.sources-toggle .toggle-arrow {
+  transition: transform 0.3s;
+}
+
+.sources-toggle[aria-expanded="true"] .toggle-arrow {
+  transform: rotate(180deg);
 }

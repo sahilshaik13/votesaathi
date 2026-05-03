@@ -1,11 +1,36 @@
 import React, { useState } from 'react'
 import './InputBar.css'
+import { useLanguage } from '../context/LanguageContext'
 
-/**
- * Text input field + send button for chat.
- */
 export default function InputBar({ onSend, disabled }) {
   const [text, setText] = useState('')
+  const { t, lang } = useLanguage()
+  const [isListening, setIsListening] = useState(false)
+
+  const handleVoiceInput = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    if (!SpeechRecognition) {
+      alert("Voice recognition is not supported in this browser.")
+      return
+    }
+
+    const recognition = new SpeechRecognition()
+    recognition.lang = lang === 'en' ? 'en-IN' : 
+                       lang === 'hi' ? 'hi-IN' : 
+                       lang === 'bn' ? 'bn-IN' : 
+                       lang === 'ta' ? 'ta-IN' : 
+                       lang === 'te' ? 'te-IN' : 
+                       lang === 'mr' ? 'mr-IN' : 'en-IN'
+    
+    recognition.onstart = () => setIsListening(true)
+    recognition.onend = () => setIsListening(false)
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript
+      setText(transcript)
+    }
+
+    recognition.start()
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -16,17 +41,26 @@ export default function InputBar({ onSend, disabled }) {
 
   return (
     <form className="input-bar" onSubmit={handleSubmit}>
+      <button 
+        type="button" 
+        className={`voice-btn ${isListening ? 'listening' : ''}`} 
+        onClick={handleVoiceInput}
+        aria-label="Voice input"
+      >
+        {isListening ? '🛑' : '🎙️'}
+      </button>
       <input
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Ask about voter registration, MCC, deadlines..."
+        placeholder={t('ask_placeholder')}
         disabled={disabled}
         aria-label="Chat input"
         autoFocus
       />
       <button 
         type="submit" 
+        className="send-btn"
         disabled={!text.trim() || disabled}
         aria-label="Send message"
       >

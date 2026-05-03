@@ -22,14 +22,30 @@ def get_session_history(session_id: str) -> list[dict]:
     return []
 
 
-def append_message(session_id: str, role: str, content: str) -> None:
+def append_message(session_id: str, role: str, content: str, user_id: str | None = None) -> None:
     """Append a single message turn to the session document."""
     db = _client()
     ref = db.collection(FIRESTORE_COLLECTION).document(session_id)
-    ref.set(
-        {"history": firestore.ArrayUnion([{"role": role, "content": content}])},
-        merge=True,
-    )
+    
+    data = {"history": firestore.ArrayUnion([{"role": role, "content": content}])}
+    if user_id:
+        data["user_id"] = user_id
+        
+    ref.set(data, merge=True)
+
+
+def get_user_sessions(user_id: str) -> list[dict]:
+    """Return all session IDs associated with a user."""
+    db = _client()
+    docs = db.collection(FIRESTORE_COLLECTION).where("user_id", "==", user_id).stream()
+    
+    sessions = []
+    for doc in docs:
+        sessions.append({
+            "session_id": doc.id,
+            "last_updated": doc.update_time.isoformat() if doc.update_time else None
+        })
+    return sessions
 
 
 def delete_session(session_id: str) -> None:

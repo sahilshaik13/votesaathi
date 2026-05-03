@@ -5,15 +5,48 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
+// Add JWT to every request if available
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('vs_token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
+
 /**
  * Send a chat message to the VoteSaathi backend.
  * @param {string} message
  * @param {string} sessionId
+ * @param {string} userId
  * @returns {Promise<{reply: string, sources: Array, session_id: string}>}
  */
-export async function postChat(message, sessionId) {
-  const { data } = await api.post('/chat', { message, session_id: sessionId })
+export async function postChat(message, sessionId, userId, lang = 'English') {
+  const { data } = await api.post('/chat', { 
+    message, 
+    session_id: sessionId,
+    user_id: userId,
+    lang: lang
+  })
   return data
+}
+
+/**
+ * Fetch all sessions for a user.
+ * @param {string} userId
+ */
+export async function getUserSessions(userId) {
+  const { data } = await api.get(`/user/sessions/${userId}`)
+  return data.sessions
+}
+
+/**
+ * Fetch a single session's history.
+ * @param {string} sessionId
+ */
+export async function getSession(sessionId) {
+  const { data } = await api.get(`/session/${sessionId}`)
+  return data.history
 }
 
 /**

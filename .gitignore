@@ -1,42 +1,79 @@
-.gitnexus
-
-# Secrets & credentials - NEVER commit these
-credentials.json
-*.json.key
-service-account*.json
-*-sa.json
-application_default_credentials.json
-.env
-.env.local
-.env.*.local
+# Node/JavaScript
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
 
 # Python
 __pycache__/
 *.py[cod]
-*.pyo
-.venv/
-venv/
+*$py.class
+*.so
+.Python
 env/
-*.egg-info/
-dist/
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
 
-# Node
-node_modules/
-frontend/dist/
-frontend/build/
-frontend/.env
-frontend/.env.local
+# Virtual Environments
+venv/
+.venv/
+env/
+.env_venv/
 
-# Docker
-*.log
+# Environment variables & Secrets (CRITICAL)
+.env
+.env.*
+!*.env.example
+*.pem
+*.key
+credentials.json
+*-firebase-adminsdk-*.json
+service-account.json
+client_secrets.json
+secrets/
 
-# IDE
-.vscode/
+# IDEs and Editors
 .idea/
+.vscode/
 *.swp
 *.swo
-
-# OS
+*~
 .DS_Store
-Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# GitNexus & AI Agents
+.gitnexus/
+.agents/
+AGENTS.md
+CLAUDE.md
+skills-lock.json
+
+# Local test scratchpads
+scratch/
+test_*.json
+
+# RAG Corpus Documents (Stored in GCS Bucket)
+rag-corpus/documents/*.pdf
+rag-corpus/documents/*.PDF
+!rag-corpus/documents/README.md

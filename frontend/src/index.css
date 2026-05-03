@@ -1,47 +1,197 @@
+/* ============================================================
+   VoteSaathi — Premium Light Design System
+   Theme: Classic Green & White
+   Style: Glassmorphic Liquid Glass + Skeuomorphism
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 :root {
-  --bg: #ffffff;
-  --bg-alt: #f8f9fa;
-  --surface: #f1f3f4;
-  --border: #e0e0e0;
-  --text: #202124;
-  --text-muted: #5f6368;
-  --accent: #1a73e8;
-  --accent-hover: #1557b0;
+  /* Fonts */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Core palette — Clean White & Emerald Green */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
   
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Green Accents */
+  --green-primary: #10b981;
+  --green-dark: #065f46;
+  --green-light: #d1fae5;
+  --green-glow: rgba(16, 185, 129, 0.2);
+  
+  /* Text */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-on-green: #ffffff;
+
+  /* Glass Surfaces (Light Mode) */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(16, 185, 129, 0.1);
+  --glass-highlight: rgba(255, 255, 255, 0.8);
+
+  /* Skeuomorphic Shadows */
+  --skeu-shadow-outer: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+  --skeu-shadow-inner: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
+  --skeu-shadow-raised: 12px 12px 24px rgba(0, 0, 0, 0.05), -12px -12px 24px rgba(255, 255, 255, 0.8);
+
+  /* Radii */
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --radius-pill: 999px;
+
+  /* Spacing Scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Transitions */
+  --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
 }
 
-@media (prefers-color-scheme: dark) {
+body.high-contrast {
+  --bg-primary: #000000;
+  --bg-secondary: #000000;
+  --bg-tertiary: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #f0f0f0;
+  --text-muted: #cccccc;
+  --green-primary: #00ff00;
+  --green-dark: #00cc00;
+  --green-light: #003300;
+  --glass-bg: rgba(0, 0, 0, 0.9);
+  --glass-border: #ffffff;
+  --skeu-shadow-outer: none;
+  --skeu-shadow-inner: none;
+  --skeu-shadow-raised: none;
+  border: 2px solid white;
+}
+
+body.high-contrast * {
+  border-color: #ffffff !important;
+}
+
+@media (max-width: 768px) {
   :root {
-    --bg: #121212;
-    --bg-alt: #1e1e1e;
-    --surface: #2d2d2d;
-    --border: #404040;
-    --text: #e8eaed;
-    --text-muted: #9aa0a6;
-    --accent: #8ab4f8;
-    --accent-hover: #aecbfa;
+    font-size: 14px;
   }
 }
 
-* {
+/* ---- Reset ---- */
+*, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: -0.01em;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--bg);
-  color: var(--text);
   height: 100vh;
+  width: 100vw;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
+/* Liquid Glass Background Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 20%, #d1fae5 0%, transparent 40%),
+              radial-gradient(circle at 70% 80%, #ecfdf5 0%, transparent 40%);
+  animation: liquidMove 15s ease-in-out infinite alternate;
+  z-index: -1;
+}
+
+@keyframes liquidMove {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(5%, 5%) rotate(5deg); }
+}
+
+#root {
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-#root {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* ---- Components Styling (Global) ---- */
+
+.skeu-panel {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--skeu-shadow-outer);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+
+.primary-btn {
+  background: var(--green-primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 20px var(--green-glow);
+  transition: var(--transition-base);
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  background: var(--green-dark);
+  box-shadow: 0 15px 25px var(--green-glow);
+}
+
+.secondary-btn {
+  background: var(--bg-secondary);
+  color: var(--green-primary);
+  border: 1px solid var(--green-primary);
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.secondary-btn:hover {
+  background: var(--green-light);
+}
+
+/* Hide Scrollbars but maintain functionality */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }

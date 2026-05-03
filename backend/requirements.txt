@@ -1,6 +1,17 @@
 fastapi[all]
 uvicorn[standard]
 google-cloud-firestore
+google-cloud-secret-manager
+google-cloud-logging
+pytest
+pytest-asyncio
+httpx
+google-cloud-aiplatform
 google-genai
 pydantic
 python-dotenv
+PyJWT
+beautifulsoup4
+requests
+firebase-admin
+

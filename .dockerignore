@@ -1,0 +1,32 @@
+# Version control
+.git
+.gitignore
+
+# Environments & Node
+node_modules
+npm-debug.log
+venv
+.venv
+__pycache__
+*.pyc
+
+# IDEs
+.vscode
+.idea
+.DS_Store
+
+# Secrets (CRITICAL)
+# Exclude all secrets from being baked into the docker image!
+.env
+.env.*
+!*.env.example
+credentials.json
+*-firebase-adminsdk-*.json
+*.pem
+*.key
+
+# Local Data
+rag-corpus/
+scratch/
+logs/
+.gitnexus/

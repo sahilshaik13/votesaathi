@@ -4,57 +4,84 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  padding: 2rem;
-  animation: scaleIn 0.3s ease-out;
+  padding: var(--space-2xl) var(--space-xl);
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
 }
 
 .welcome-banner {
-  text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: var(--space-3xl);
+}
+
+.welcome-logo {
+  height: 80px;
+  width: auto;
+  margin-bottom: var(--space-xl);
 }
 
 .welcome-banner h2 {
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-  background: linear-gradient(90deg, var(--accent) 0%, #ff8a00 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--green-dark);
+  margin-bottom: var(--space-sm);
+  line-height: 1.2;
 }
 
 .welcome-banner p {
-  color: var(--text-muted);
+  font-family: var(--font-body);
   font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .chips-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
-  max-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+  max-width: 700px;
+  width: 100%;
 }
 
 .chip-btn {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 0.75rem 1.25rem;
-  font-size: 0.95rem;
-  color: var(--text);
+  background: var(--bg-secondary);
+  padding: var(--space-xl);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--skeu-shadow-outer);
   cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: var(--space-sm);
 }
 
 .chip-btn:hover {
-  background: var(--bg-alt);
-  border-color: var(--accent);
-  color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transform: translateY(-5px);
+  background: var(--green-light);
+  border-color: var(--green-primary);
 }
 
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+.chip-icon {
+  font-size: 1.5rem;
+}
+
+.chip-text {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .chips-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .welcome-banner h2 {
+    font-size: 2rem;
+  }
 }
