@@ -30,7 +30,15 @@ export const translations = {
     how_lang: "Multilingual: Native support for 7+ Indian languages.",
     how_live: "Live Data: Real-time scraping of election news.",
     how_secure: "Secure: Enterprise-grade security via GCP Secret Manager.",
-    explore_dashboard: "Explore the Dashboard"
+    explore_dashboard: "Explore the Dashboard",
+    q_register: "How do I register to vote?",
+    q_mcc: "What is the Model Code of Conduct?",
+    q_documents: "What documents do I need at the booth?",
+    q_booth: "How do I find my polling booth?",
+    q_phase: "When is the next election phase?",
+    q_nri: "Can NRIs vote in Indian elections?",
+    q_evm: "How does the EVM machine work?",
+    q_eligibility: "Am I eligible to vote? I am 17."
   },
   hi: {
     dashboard: "डैशबोर्ड",
@@ -62,7 +70,15 @@ export const translations = {
     how_lang: "बहुभाषी: 7+ भारतीय भाषाओं के लिए समर्थन।",
     how_live: "लाइव डेटा: चुनाव समाचारों की रीयल-टाइम स्क्रैपिंग।",
     how_secure: "सुरक्षित: GCP सीक्रेट मैनेजर के माध्यम से सुरक्षा।",
-    explore_dashboard: "डैशबोर्ड देखें"
+    explore_dashboard: "डैशबोर्ड देखें",
+    q_register: "मैं वोट देने के लिए पंजीकरण कैसे करूँ?",
+    q_mcc: "आदर्श आचार संहिता क्या है?",
+    q_documents: "बूथ पर मुझे किन दस्तावेजों की आवश्यकता है?",
+    q_booth: "मैं अपना पोलिंग बूथ कैसे ढूंढूं?",
+    q_phase: "अगला चुनाव चरण कब है?",
+    q_nri: "क्या अनिवासी भारतीय (NRI) भारतीय चुनावों में वोट दे सकते हैं?",
+    q_evm: "EVM मशीन कैसे काम करती है?",
+    q_eligibility: "क्या मैं वोट देने के योग्य हूँ? मैं 17 साल का हूँ।"
   },
   bn: {
     dashboard: "ড্যাশবোর্ড",
@@ -82,7 +98,15 @@ export const translations = {
     turnout: "ভোটার উপস্থিতি",
     registered: "নিবন্ধিত ভোটার",
     seats: "মোট আসন",
-    live_updates: "লাইভ আপডেট"
+    live_updates: "লাইভ আপডেট",
+    q_register: "ভোট দেওয়ার জন্য কীভাবে নাম নথিভুক্ত করব?",
+    q_mcc: "আদর্শ আচরণবিধি কী?",
+    q_documents: "বুথে আমার কী কী নথি প্রয়োজন?",
+    q_booth: "আমি কীভাবে আমার পোলিং বুথ খুঁজে পাব?",
+    q_phase: "পরবর্তী নির্বাচনের পর্যায় কবে?",
+    q_nri: "NRIs কি ভারতীয় নির্বাচনে ভোট দিতে পারে?",
+    q_evm: "EVM মেশিন কীভাবে কাজ করে?",
+    q_eligibility: "আমি কি ভোট দেওয়ার যোগ্য? আমার বয়স ১৭।"
   },
   ta: {
     dashboard: "டாஷ்போர்டு",
@@ -93,7 +117,7 @@ export const translations = {
     key_metrics: "முக்கிய அளவீடுகள்",
     latest_updates: "சமீபத்திய செய்திகள்",
     verified_intelligence: "சரிபார்க்கப்பட்ட தகவல்",
-    verified_p: "ECI இணையதளங்கள் మరియు முன்னணி செய்தி நிறுவனங்களில் இருந்து பெறப்பட்ட நேரடி தகவல்கள்.",
+    verified_p: "ECI இணையதளங்கள் மற்றும் முன்னணி செய்தி நிறுவனங்களில் இருந்து பெறப்பட்ட நேரடி தகவல்கள்.",
     view_sources: "ஆதாரங்களைக் காண்க",
     ask_placeholder: "தேர்தல் பற்றி VoteSaathi-யிடம் கேளுங்கள்...",
     welcome_title: "VoteSaathi-யிடம் கேளுங்கள்",
@@ -102,7 +126,15 @@ export const translations = {
     turnout: "வாக்காளர் வருகை",
     registered: "பதிவு செய்யப்பட்ட வாக்காளர்கள்",
     seats: "மொத்த இடங்கள்",
-    live_updates: "நேரடி அப்டேட்கள்"
+    live_updates: "நேரடி அப்டேட்கள்",
+    q_register: "வாக்களிக்க நான் எப்படி பதிவு செய்வது?",
+    q_mcc: "மாதிரி நடத்தை விதிமுறை என்றால் என்ன?",
+    q_documents: "வாக்குச்சாவடிக்கு என்ன ஆவணங்கள் தேவை?",
+    q_booth: "எனது வாக்குச்சாவடியை நான் எப்படி கண்டுபிடிப்பது?",
+    q_phase: "அடுத்த தேர்தல் கட்டம் எப்போது?",
+    q_nri: "NRIs இந்தியத் தேர்தல்களில் வாக்களிக்க முடியுமா?",
+    q_evm: "EVM இயந்திரம் எப்படி வேலை செய்கிறது?",
+    q_eligibility: "நான் வாக்களிக்க தகுதியுடையவனா? எனக்கு 17 வயது।"
   },
   te: {
     dashboard: "డాష్‌బోర్డ్",
@@ -134,7 +166,15 @@ export const translations = {
     how_lang: "బహుభాషా: 7+ భారతీయ భాషలకు మద్దతు.",
     how_live: "లైవ్ డేటా: ఎన్నికల వార్తల నిజ-సమయ సేకరణ.",
     how_secure: "సురక్షితం: GCP సీక్రెట్ మేనేజర్ ద్వారా భద్రత.",
-    explore_dashboard: "డాష్‌బోర్డ్‌ని అన్వేషించండి"
+    explore_dashboard: "డాష్‌బోర్డ్‌ని అన్వేషించండి",
+    q_register: "ఓటు వేయడానికి నేను ఎలా రిజిస్టర్ చేసుకోవాలి?",
+    q_mcc: "ఆదర్శ ఎన్నికల నియమావళి (MCC) అంటే ఏమిటి?",
+    q_documents: "పోలింగ్ బూత్ వద్ద నాకు ఏ పత్రాలు అవసరం?",
+    q_booth: "నా పోలింగ్ బూత్‌ను నేను ఎలా కనుగొనాలి?",
+    q_phase: "తదుపరి ఎన్నికల దశ ఎప్పుడు?",
+    q_nri: "NRIs భారత ఎన్నికలలో ఓటు వేయవచ్చా?",
+    q_evm: "EVM మెషిన్ ఎలా పనిచేస్తుంది?",
+    q_eligibility: "నేను ఓటు వేయడానికి అర్హుడినా? నాకు 17 ఏళ్లు."
   },
   mr: {
     dashboard: "डॅशबोर्ड",
@@ -154,6 +194,14 @@ export const translations = {
     turnout: "मतदानाची टक्केवारी",
     registered: "नोंदणीकृत मतदार",
     seats: "एकूण जागा",
-    live_updates: "थेट अपडेट्स"
+    live_updates: "थेट अपडेट्स",
+    q_register: "मतदानासाठी नोंदणी कशी करावी?",
+    q_mcc: "आदर्श आचारसंहिता काय आहे?",
+    q_documents: "बूथवर मला कोणत्या कागदपत्रांची गरज आहे?",
+    q_booth: "माझे मतदान केंद्र कसे शोधायचे?",
+    q_phase: "पुढील निवडणूक टप्पा कधी आहे?",
+    q_nri: "अनिवासी भारतीय (NRI) भारतीय निवडणुकीत मतदान करू शकतात का?",
+    q_evm: "EVM मशीन कसे कार्य करते?",
+    q_eligibility: "मी मतदानासाठी पात्र आहे का? माझे वय १७ आहे।"
   }
 };

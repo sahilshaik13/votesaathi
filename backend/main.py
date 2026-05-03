@@ -5,6 +5,7 @@ Registers all routers and configures CORS for the election assistant backend.
 """
 
 import google.cloud.logging
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import chat, timeline, health, dashboard
